@@ -29,6 +29,7 @@ Step 3・4 の一部（ポータルのフォーム、SLA、Automation）は公�
 | 2 | カスタムフィールド・画面配置・リクエストタイプ | `02-fields-and-request-types.ps1` | 完了 |
 | 3 | ポータルのフォーム項目配置・ポータルグループ | 管理画面（手作業） | 完了 |
 | 4 | SLA・承認者を設定する Automation・本人承認の許可 | 管理画面 ＋ `04-allow-self-approval.ps1` | 完了 |
+| 5 | 別ユーザー（顧客）が申請し、承認者が承認する流れの確認 | 管理画面（顧客追加）＋ ポータル | 完了 |
 
 ### Step 1 の結果
 
@@ -115,3 +116,31 @@ DEMO 専用のワークフロー（DEMO 以外のプロジェクトで使われ�
 - DEMO-3（金額 5,000 円）で承認から次の状態までを確認しました: 承認すると「Waiting for support」に進み、承認までの時間の SLA が完了し、解決までの時間の SLA（24h）が始まりました
 
 画面操作の録画（GIF）: `step4a_demo_sla_setup.gif`（SLA 設定）、`step4b_demo_approver_automation.gif`（Automation 作成）
+
+### Step 5 の結果（申請者と承認者が別の人の流れ）
+
+申請者 `silverhomurallc@gmail.com`（ポータルのみ使う顧客）、承認者 Silver Homura LLC（`takashi_ichimasa@silverhomuradev.com`）で、実際の運用に近い流れを確認しました。
+
+**顧客の追加**
+
+1. DEMO →「Customers」→「Add customers」でメールアドレスを追加します。招待メールが送られます
+2. 追加されるのはポータル専用の顧客アカウント（accountId が `qm:` で始まる）で、Jira のライセンスは使いません
+
+**つまずいた点: 招待リンクでパスワードを設定できない**
+
+- 招待メールのリンク先で「Set password」を押しても、画面が何も変わりませんでした
+- 開発者ツールで確認すると、`setpassword?jwt=...` の通信が **401** を返していました。招待リンクに含まれるトークンが無効になっていたのが原因です。「Resend Invite」を押すたびに、それまでのリンクは使えなくなります
+- 解決方法: 招待リンクは使わず、ポータル（`/servicedesk/customer/portal/2`）のログイン画面で「Forgot your password?」から再設定メールを受け取り、パスワードを設定しました。設定すると、Customers 画面の状態が「Invited」から「Active」に変わります
+
+**動作確認**（DEMO-4: 備品購入申請、金額 150,000 円、gmail のアカウントからポータルで申請）
+
+| 確認内容 | 結果 |
+|---|---|
+| 承認者が Automation で設定されるか | Silver Homura LLC が設定された |
+| 10 万円以上で部長承認のコメントが付くか | 内部コメントが付いた（顧客には表示されない） |
+| 申請直後の SLA | 承認までの時間（8h）が計測中 |
+| takashi が承認した後 | 「Waiting for support」に進み、承認までの時間の SLA が完了（違反なし）、解決までの時間の SLA（24h）が始まった |
+
+申請者と承認者が別の人であれば、`04-allow-self-approval.ps1 -Restore`（本人承認を禁止する元の設定）のままでも承認できます。
+
+画面操作の録画（GIF）: `step5_demo_gmail_request_takashi_approval.gif`（takashi による承認）
