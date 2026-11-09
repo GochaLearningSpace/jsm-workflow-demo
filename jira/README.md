@@ -14,7 +14,10 @@
 ```powershell
 .\jira\01-create-project.ps1
 .\jira\02-fields-and-request-types.ps1
+.\jira\04-allow-self-approval.ps1   # -Restore で元の設定（本人承認を禁止）に戻す
 ```
+
+Step 3・4 の一部（ポータルのフォーム、SLA、Automation）は公開 API がないため管理画面で設定しています。
 
 スクリプトは日本語を含むため UTF-8（BOM 付き）で保存しています。Windows PowerShell 5.1 は BOM のない UTF-8 ファイルを正しく読めないためです。
 
