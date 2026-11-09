@@ -4,7 +4,7 @@ Jira Service Management で構築する「社内申請・承認・制作工程�
 `index.html` をブラウザで開くだけで動作します（ビルド・サーバー不要、データはブラウザ内に保存）。
 
 > 本リポジトリは、クラウドワークスの案件 https://crowdworks.jp/public/jobs/13591314 への応募に際し、提案内容の具体例として作成したものです。
-> 設計のモック（`index.html`）と、実際の Jira Cloud 上での構築記録（[`jira/README.md`](jira/README.md)）を含みます。
+> 設計のモック（`index.html`）と、実際の Jira Cloud 上での構築記録（[`jira/README.md`](jira/README.md)）、備品購入申請〜承認のテストレポート（[`docs/test-report/index.html`](docs/test-report/index.html)、録画 GIF 付き）を含みます。
 
 ## 体験の流れ（約3分）
 
