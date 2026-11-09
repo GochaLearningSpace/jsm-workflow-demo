@@ -13,7 +13,10 @@
 
 ```powershell
 .\jira\01-create-project.ps1
+.\jira\02-fields-and-request-types.ps1
 ```
+
+スクリプトは日本語を含むため UTF-8（BOM 付き）で保存しています。Windows PowerShell 5.1 は BOM のない UTF-8 ファイルを正しく読めないためです。
 
 ## 進捗
 
