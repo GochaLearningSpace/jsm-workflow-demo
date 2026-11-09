@@ -36,6 +36,10 @@ function Invoke-Jira {
         return Invoke-RestMethod @params
     } catch {
         $code = $_.Exception.Response.StatusCode.value__
-        throw "Jira $Method $Path failed ($code): $($_.ErrorDetails.Message)"
+        $msg = $_.ErrorDetails.Message
+        if (-not $msg -and $_.Exception.Response) {
+            try { $msg = (New-Object IO.StreamReader($_.Exception.Response.GetResponseStream())).ReadToEnd() } catch { }
+        }
+        throw "Jira $Method $Path failed ($code): $msg"
     }
 }
