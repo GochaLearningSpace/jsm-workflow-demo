@@ -141,6 +141,6 @@ DEMO 専用のワークフロー（DEMO 以外のプロジェクトで使われ�
 | 申請直後の SLA | 承認までの時間（8h）が計測中 |
 | takashi が承認した後 | 「Waiting for support」に進み、承認までの時間の SLA が完了（違反なし）、解決までの時間の SLA（24h）が始まった |
 
-申請者と承認者が別の人であれば、`04-allow-self-approval.ps1 -Restore`（本人承認を禁止する元の設定）のままでも承認できます。
+現在は本人承認を許可した設定のままです。申請者と承認者が別の人であれば、`04-allow-self-approval.ps1 -Restore` で本人承認を禁止する元の設定に戻しても承認できます。
 
 画面操作の録画（GIF）: `step5_demo_gmail_request_takashi_approval.gif`（takashi による承認）
